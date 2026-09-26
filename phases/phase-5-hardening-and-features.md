@@ -126,3 +126,21 @@ Lambda/route isn't deployed yet.
   static flow, since the layout already stacks sidebar-above-content at
   that width. Verified live: sidebar and its nav/user block stay
   perfectly still while scrolling the quotes table underneath.
+- 2026-09-27: Set up version control. Created a public GitHub repo
+  (`https://github.com/Xaifullah/aws-quotes-erp`), scrubbed the AWS
+  account ID from `phase-3`/`phase-4` docs first, added `.gitignore`s
+  (Lambda zips, `build-auth/`, `node_modules`, local AWS CLI scratch
+  files) and a root `README.md`. History built as one feature branch per
+  phase (`feature/ec2-scraper`, `feature/lambda-processing`,
+  `feature/auth-api`, `feature/frontend`, `feature/hardening-and-features`),
+  each merged into `main` with `--no-ff` so the branch structure stays
+  visible. All 5 branches + main pushed to origin. Note: bucket names,
+  the API Gateway ID, and region are still in the phase docs in plain
+  text (only the account ID was scrubbed, per an explicit choice) —
+  revisit if this repo's visibility expectations ever change.
+- 2026-09-27: **Session closed here.** Everything through this point is
+  deployed, verified working, and version-controlled. Open items for next
+  time: (1) swap in CloudFront once the AWS account-verification support
+  case clears (exact commands saved in this file's history); (2) the
+  multi-site scraping feature discussed but not built — needs the user to
+  pick a second site and confirm same-vs-different schema before scoping.
