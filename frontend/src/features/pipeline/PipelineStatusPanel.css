@@ -1,0 +1,80 @@
+.pipeline-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pipeline-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pipeline-panel-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+.pipeline-health {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.pipeline-health-ok {
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.pipeline-health-warn {
+  color: var(--warning);
+  background: var(--warning-soft);
+}
+
+.pipeline-metrics {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.pipeline-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pipeline-metric-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.pipeline-metric-value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pipeline-metric-value-sm {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pipeline-error {
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  color: var(--danger);
+  background: var(--danger-soft);
+}

@@ -1,0 +1,95 @@
+.quotes-stats {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.quotes-search {
+  padding: 7px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  width: 220px;
+  outline: none;
+}
+
+.quotes-search:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.quotes-export {
+  padding: 7px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.quotes-export:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+.active-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.active-filter-chip button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.quotes-refresh {
+  padding: 7px 14px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.quotes-refresh:hover:not(:disabled) {
+  background: var(--surface-alt);
+}
+
+.quotes-refresh:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.quotes-error {
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.quotes-loading {
+  padding: 32px;
+  text-align: center;
+  color: var(--text-muted);
+}
