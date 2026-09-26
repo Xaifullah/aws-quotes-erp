@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+build-auth/
+
+# Lambda deployment packages (rebuilt from source, not tracked)
+*.zip
+
+# Local AWS CLI scratch files (trust policies, bucket policies, CORS
+# config, test payloads, etc.) — created ad hoc in this directory during
+# deployment. Intentionally not tracked; see phases/*.md for the exact
+# policy documents that were applied.
+/*.json
+
+# Node (frontend has its own .gitignore too, this covers the repo root)
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
