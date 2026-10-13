@@ -113,7 +113,7 @@ export function QuotesDashboard({ token, onLogout }: QuotesDashboardProps) {
         }
       />
       <div className="app-shell-content">
-        <PipelineStatusPanel token={token} />
+        <PipelineStatusPanel token={token} onScrapeProcessed={reload} />
 
         <div className="quotes-stats">
           <StatCard label="Total quotes" value={quotes.length} />

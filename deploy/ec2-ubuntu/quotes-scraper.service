@@ -1,0 +1,17 @@
+[Unit]
+Description=Quotes ERP scraper (publishes scraped quotes to SQS)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=quotes
+Group=quotes
+WorkingDirectory=/opt/quotes-erp
+EnvironmentFile=/etc/quotes-scraper.env
+ExecStart=/opt/quotes-erp/.venv/bin/python -m scraper.main
+TimeoutStartSec=300
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true

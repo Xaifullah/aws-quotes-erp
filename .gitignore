@@ -2,6 +2,9 @@
 __pycache__/
 *.pyc
 build-auth/
+build-consumer/
+build-scraper/
+build-api/
 
 # Lambda deployment packages (rebuilt from source, not tracked)
 *.zip

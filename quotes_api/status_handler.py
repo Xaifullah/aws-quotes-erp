@@ -1,12 +1,9 @@
 import json
-import os
 from typing import Any
 
-from quotes_api.s3_pipeline_status_repository import S3PipelineStatusRepository
+from quotes_api.repositories import build_status_repository
 
-BUCKET_NAME = os.environ["QUOTES_BUCKET"]
-
-_repository = S3PipelineStatusRepository(bucket=BUCKET_NAME)
+_repository = build_status_repository()
 
 
 def handler(event: dict[str, Any], context: Any) -> dict[str, Any]:

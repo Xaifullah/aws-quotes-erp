@@ -14,18 +14,30 @@ export, and a live scrape-pipeline health panel.
 
 ## Architecture
 
+Phase 6 (event-driven, on branch `feature/sqs-rds-pipeline`):
+
 ```
-EC2 (scheduled scraper)
-   → S3 raw/
-      → Lambda (clean & normalize)
-         → S3 processed/
-            → Lambda API (register / login / quotes / status)
+API Gateway POST /scrape → Lambda quotes-scraper ┐
+Ubuntu EC2 (systemd timer) → scraper.main ───────┤  publishers
+                                                 ▼
+                         SQS quotes-ingest-queue (+ DLQ)
+                                                 ▼
+                         Lambda quotes-consumer (clean + upsert)   consumer
+                                                 ▼
+                         RDS PostgreSQL (quotes, scrape_runs)
+                                                 ▼
+            Lambda API (register / login / quotes / status / scrape)
                → API Gateway (HTTP API, Lambda authorizer on protected routes)
                   → React frontend (S3 static hosting)
 
 DynamoDB — Users table (bcrypt password hashes)
 SSM Parameter Store — JWT signing secret (SecureString)
 ```
+
+Phases 1–5 used a file pipeline (EC2 → S3 `raw/` → Lambda → S3 `processed/`).
+It remains in the code as a rollback path (`DATA_BACKEND=s3`, `SCRAPER_OUTPUT=s3`).
+See [phase 6](phases/phase-6-sqs-rds-pipeline.md) and the
+[impact report](reports/phase-6-impact-report.md).
 
 Every Lambda's IAM role is scoped to only the S3 prefixes / DynamoDB table /
 SSM parameter it actually needs — see each phase doc under [`phases/`](phases/)
@@ -41,10 +53,12 @@ response — no business logic in the handler itself.
 
 | Directory | Deploys as | Responsibility |
 |---|---|---|
-| [`scraper/`](scraper/) | EC2 (Task Scheduler) | Scrapes quotes.toscrape.com, writes raw JSON to S3 |
-| [`processing/`](processing/) | Lambda (S3-triggered) | Cleans/normalizes raw quotes, writes to `processed/` |
+| [`scraper/`](scraper/) | Lambda `quotes-scraper` + Ubuntu EC2 (systemd timer) | Scrapes quotes.toscrape.com, publishes batches to SQS (legacy: raw JSON to S3) |
+| [`processing/`](processing/) | Lambda `quotes-consumer` (SQS-triggered) | Cleans/normalizes quotes, upserts them into RDS (legacy: S3 `processed/`) |
+| [`db/`](db/) | — (bundled into the VPC Lambdas) | Postgres connection (TLS against the RDS CA), schema |
 | [`auth/`](auth/) | 3 Lambdas | Register, login (bcrypt + JWT), and the Lambda authorizer |
-| [`quotes_api/`](quotes_api/) | 2 Lambdas | Serves processed quotes; reports scrape-pipeline health |
+| [`quotes_api/`](quotes_api/) | 2 Lambdas (in VPC) | Serves quotes from RDS; reports scrape-pipeline health |
+| [`deploy/ec2-ubuntu/`](deploy/ec2-ubuntu/) | Ubuntu EC2 | Install script + systemd service/timer for the scheduled scraper |
 | [`frontend/`](frontend/) | S3 static site | React + TypeScript ERP-style dashboard |
 | [`phases/`](phases/) | — | Build log: what was built, why, and every bug hit along the way |
 
@@ -74,9 +88,11 @@ and more):
 3. [DynamoDB + auth API](phases/phase-3-dynamodb-auth-api.md)
 4. [React frontend](phases/phase-4-frontend.md)
 5. [Code audit fixes + new features](phases/phase-5-hardening-and-features.md)
+6. [API Gateway scraper → SQS → RDS](phases/phase-6-sqs-rds-pipeline.md)
 
 ## Free tier notes
 
 Only Lambda and DynamoDB are **Always Free**. EC2, S3, API Gateway, and
-CloudFront are free for a new AWS account's first 12 months — see
+CloudFront are free for a new AWS account's first 12 months (RDS
+`db.t4g.micro` too, on the legacy free tier; SQS has an always-free 1M requests/month) — see
 [`phase-1`](phases/phase-1-s3-ec2-scraper.md) for the full breakdown.

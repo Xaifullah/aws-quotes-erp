@@ -78,3 +78,35 @@
   color: var(--danger);
   background: var(--danger-soft);
 }
+
+.pipeline-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pipeline-scrape {
+  padding: 5px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pipeline-scrape:hover:not(:disabled) {
+  background: var(--surface-alt);
+}
+
+.pipeline-scrape:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.pipeline-scrape-message {
+  font-size: 12.5px;
+  padding: 6px 10px;
+  border-radius: 7px;
+}
