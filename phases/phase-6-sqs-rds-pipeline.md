@@ -2,6 +2,10 @@
 
 **Status**: Code complete on `feature/sqs-rds-pipeline`. AWS deployment pending (commands below).
 
+> **Setting up in a new account through the AWS Console?** Follow
+> [`deploy/CONSOLE-SETUP.md`](../deploy/CONSOLE-SETUP.md) instead of the CLI commands below.
+> It builds everything from scratch, including auth, the API and the frontend.
+
 ## Goal
 Move from the batch file pipeline (EC2 → S3 `raw/` → Lambda → S3 `processed/` →
 full-bucket scan per request) to an event-driven pipeline:

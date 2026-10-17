@@ -21,3 +21,6 @@ node_modules/
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# Lambda zips built by deploy/build-lambdas.ps1
+dist-lambda/

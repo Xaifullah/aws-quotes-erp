@@ -88,7 +88,7 @@ and more):
 3. [DynamoDB + auth API](phases/phase-3-dynamodb-auth-api.md)
 4. [React frontend](phases/phase-4-frontend.md)
 5. [Code audit fixes + new features](phases/phase-5-hardening-and-features.md)
-6. [API Gateway scraper → SQS → RDS](phases/phase-6-sqs-rds-pipeline.md)
+6. [API Gateway scraper → SQS → RDS](phases/phase-6-sqs-rds-pipeline.md) — console walkthrough for a new account: [`deploy/CONSOLE-SETUP.md`](deploy/CONSOLE-SETUP.md)
 
 ## Free tier notes
 
